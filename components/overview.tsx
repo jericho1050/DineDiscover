@@ -29,7 +29,7 @@ export const Overview = () => {
           Welcome to the DineDiscover!
         </p>
         <p>
-          Enter a natural language query describing the restaurant you're looking for (e.g., "cheap sushi near downtown LA open now"). The system uses an LLM to understand your request, queries the{" "}
+          Enter a natural language query describing the restaurant you&apos;re looking for (e.g., &quot;cheap sushi near downtown LA open now&quot;). The system uses an LLM to understand your request, queries the{" "}
           <Link
             className="font-medium underline underline-offset-4"
             href="https://docs.foursquare.com/developer/reference/place-search"
