@@ -116,7 +116,7 @@ export function MultimodalInput({
 
   return (
     <div className="relative w-full flex flex-col gap-4">
-      {messages.length === 0 && (
+      {messages?.length === 0 && (
         <div className="grid sm:grid-cols-2 gap-2 w-full">
           {suggestedActions.map((suggestedAction, index) => (
             <motion.div
@@ -171,7 +171,7 @@ export function MultimodalInput({
         }}
       />
 
-      {isLoading ? (
+      {/* {isLoading ? (
         <Button
           className="rounded-full p-1.5 h-fit absolute bottom-2 right-2 m-0.5 border dark:border-zinc-600"
           onClick={(event) => {
@@ -182,7 +182,7 @@ export function MultimodalInput({
         >
           <StopIcon size={14} />
         </Button>
-      ) : (
+      ) : ( */}
         <Button
           className="rounded-full p-1.5 h-fit absolute bottom-2 right-2 m-0.5 border dark:border-zinc-600"
           onClick={(event) => {
@@ -193,7 +193,7 @@ export function MultimodalInput({
         >
           <ArrowUpIcon size={14} />
         </Button>
-      )}
+      {/* )} */}
     </div>
   );
 }

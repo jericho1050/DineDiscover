@@ -1,7 +1,8 @@
 import { motion } from "framer-motion";
 import Link from "next/link";
 
-import { MessageIcon } from "./icons";
+// Consider adding a restaurant or search icon if you have one
+import { MessageIcon, SparklesIcon } from "./icons"; 
 import { LogoPython } from "@/app/icons";
 
 export const Overview = () => {
@@ -15,29 +16,31 @@ export const Overview = () => {
       transition={{ delay: 0.5 }}
     >
       <div className="rounded-xl p-6 flex flex-col gap-8 leading-relaxed text-center max-w-xl">
+        {/* Updated Icons */}
         <p className="flex flex-row justify-center gap-4 items-center">
           <LogoPython size={32} />
           <span>+</span>
-          <MessageIcon size={32} />
+          <SparklesIcon size={32} /> {/* LLM Icon */}
+          <span>+</span>
+          <MessageIcon size={32} /> {/* Chat Icon */}
+        </p>
+        {/* Updated Description */}
+        <p>
+          Welcome to the DineDiscover!
         </p>
         <p>
-          This is an{" "}
+          Enter a natural language query describing the restaurant you're looking for (e.g., "cheap sushi near downtown LA open now"). The system uses an LLM to understand your request, queries the{" "}
           <Link
             className="font-medium underline underline-offset-4"
-            href="https://github.com/vercel-labs/ai-sdk-preview-python-streaming"
+            href="https://docs.foursquare.com/developer/reference/place-search"
             target="_blank"
           >
-            open source
-          </Link>{" "}
-          template that demonstrates the usage of{" "}
-          <Link
-            className="font-medium underline underline-offset-4"
-            href="https://sdk.vercel.ai/docs/ai-sdk-ui/stream-protocol#data-stream-protocol"
-            target="_blank"
-          >
-            Data Stream Protocol
-          </Link>{" "}
-          to stream chat completions from a Python function (
+            Foursquare Places API
+          </Link>
+          , and displays the results.
+        </p>
+        <p>
+          This application demonstrates using Python (
           <Link
             className="font-medium underline underline-offset-4"
             href="https://fastapi.tiangolo.com"
@@ -45,20 +48,7 @@ export const Overview = () => {
           >
             FastAPI
           </Link>
-          ) along with the
-          <code className="rounded-md bg-muted px-1 py-0.5">useChat</code> hook
-          on the client to create a seamless chat experience.
-        </p>
-        <p>
-          You can learn more about the AI SDK by visiting the{" "}
-          <Link
-            className="font-medium underline underline-offset-4"
-            href="https://sdk.vercel.ai/docs"
-            target="_blank"
-          >
-            docs
-          </Link>
-          .
+          ) for the backend API, an LLM for natural language processing, and React (with manual state management and API calls) for the frontend interface.
         </p>
       </div>
     </motion.div>

@@ -2,12 +2,9 @@
 
 import type { Message } from "ai";
 import { motion } from "framer-motion";
-
 import { SparklesIcon } from "./icons";
-import { Markdown } from "./markdown";
-import { PreviewAttachment } from "./preview-attachment";
 import { cn } from "@/lib/utils";
-import { Weather } from "./weather";
+import { RestaurantResults } from "./RestaurantResults";
 
 export const PreviewMessage = ({
   message,
@@ -16,6 +13,18 @@ export const PreviewMessage = ({
   message: Message;
   isLoading: boolean;
 }) => {
+  // Parse restaurants only if the role is assistant
+  const restaurants =
+    message.role === "assistant" && message.content
+      ? message.content
+          .trim()
+          .split("\n")
+          .map((line) => line.replace(/^- /, ""))
+      : [];
+
+  // Determine if the current message content should be treated as restaurant results
+  const isRestaurantResult = message.role === "assistant" && restaurants.length > 0;
+
   return (
     <motion.div
       className="w-full mx-auto max-w-3xl px-4 group/message"
@@ -35,53 +44,18 @@ export const PreviewMessage = ({
         )}
 
         <div className="flex flex-col gap-2 w-full">
-          {message.content && (
+          {/* Conditionally render based on role and content type */}
+          {isRestaurantResult ? (
             <div className="flex flex-col gap-4">
-              <Markdown>{message.content as string}</Markdown>
+              <RestaurantResults restaurants={restaurants} />
             </div>
-          )}
-
-          {message.toolInvocations && message.toolInvocations.length > 0 && (
-            <div className="flex flex-col gap-4">
-              {message.toolInvocations.map((toolInvocation) => {
-                const { toolName, toolCallId, state } = toolInvocation;
-
-                if (state === "result") {
-                  const { result } = toolInvocation;
-
-                  return (
-                    <div key={toolCallId}>
-                      {toolName === "get_current_weather" ? (
-                        <Weather weatherAtLocation={result} />
-                      ) : (
-                        <pre>{JSON.stringify(result, null, 2)}</pre>
-                      )}
-                    </div>
-                  );
-                }
-                return (
-                  <div
-                    key={toolCallId}
-                    className={cn({
-                      skeleton: ["get_current_weather"].includes(toolName),
-                    })}
-                  >
-                    {toolName === "get_current_weather" ? <Weather /> : null}
-                  </div>
-                );
-              })}
-            </div>
-          )}
-
-          {message.experimental_attachments && (
-            <div className="flex flex-row gap-2">
-              {message.experimental_attachments.map((attachment) => (
-                <PreviewAttachment
-                  key={attachment.url}
-                  attachment={attachment}
-                />
-              ))}
-            </div>
+          ) : (
+            // Render plain text for user messages or non-restaurant assistant messages
+            message.content && (
+              <div className="flex flex-col gap-4">
+                <p>{message.content}</p>
+              </div>
+            )
           )}
         </div>
       </div>

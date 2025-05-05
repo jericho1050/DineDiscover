@@ -5,15 +5,28 @@ import { GitIcon, VercelIcon } from "./icons";
 import Link from "next/link";
 
 export const Navbar = () => {
+  // Construct the Vercel deploy URL
+  const repoUrl = "https://github.com/jericho1050/DineDiscover";
+  const envVars = "TOGETHER_API_KEY,FOURSQUARE_API_KEY"; // Your required env variables
+  const envDescription = "API keys needed for LLM and Foursquare";
+  // Optional: Add a link to your .env.example if you create one
+  // const envLink = "https://github.com/jericho1050/DineDiscover/blob/main/.env.local.example"; 
+  
+  // Encode parameters for the URL
+  const vercelDeployUrl = `https://vercel.com/new/clone?repository-url=${encodeURIComponent(repoUrl)}&env=${encodeURIComponent(envVars)}&envDescription=${encodeURIComponent(envDescription)}`;
+  // Add &envLink=${encodeURIComponent(envLink)} if you have an example file
+
   return (
     <div className="p-2 flex flex-row gap-2 justify-between">
-      <Link href="https://github.com/vercel-labs/ai-sdk-preview-python-streaming">
+      {/* Updated GitHub Link */}
+      <Link href={repoUrl} target="_blank" rel="noopener noreferrer">
         <Button variant="outline">
           <GitIcon /> View Source Code
         </Button>
       </Link>
 
-      <Link href="https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fvercel-labs%2Fai-sdk-preview-python-streaming&env=OPENAI_API_KEY%2CVERCEL_FORCE_PYTHON_STREAMING&envDescription=API+keys+needed+for+application&envLink=https%3A%2F%2Fgithub.com%2Fvercel-labs%2Fai-sdk-preview-python-streaming%2Fblob%2Fmain%2F.env.example&teamSlug=vercel-labs">
+      {/* Updated Vercel Deploy Link */}
+      <Link href={vercelDeployUrl} target="_blank" rel="noopener noreferrer">
         <Button>
           <VercelIcon />
           Deploy with Vercel
